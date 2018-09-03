@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html src="http://code.jquery.com/jquery-1.7.js">
+
+<head>
+    <title>jQuery calling RESTful Services</title>
+    <meta xmlns="http://www.w3.org/1999/xhtml" content="text/html; charset=utf-8" />
+    <style http-equiv="Content-Type">
+
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .wrapper > div {
+                background-color: #f1f1f1;
+                margin: 2px;
+                padding: 5px;
+                font-size: 10px;
+            }
+
+    </style>
+
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        $(document).ready(function () {
+            let cid = getParameterByName('supplierId');
+            console.log("Supplier Id:", cid);
+            GetSupplier(cid);
+        });
+        
+        function GetSupplier(supplierId) {                
+                $.ajax({
+                    type: 'GET',
+                    url: "api/contact/Supplier/" + supplierId,
+                    dataType: 'json',
+                    success: function (data) {                        
+                        //var id = val.Person.Id;
+                        $("#SupplierId").val(supplierId);
+                        $("#FName").val(data.Person.Name.First);
+                        $("#LName").val(data.Person.Name.Last);
+                        $("#Telephone").val(data.Telephone);
+
+                        
+                    }
+                });
+            }
+
+        //function UpdateRecord(id) {
+        //    $.ajax({
+        //        type: 'GET',
+        //        url: "api/contact/Supplier/"+id,
+        //        dataType: 'json',
+        //        success: function (data) {
+
+        //            //var id = val.Person.Id;
+        //            $("#FName").val(data.Person.Name.First);
+        //            $("#LName").val(data.Person.Name.Last);
+        //            $("#Dob").val(data.BirthDay);
+        //            $("#Email").val(data.Email);
+
+        //        }
+        //    });
+        //}
+
+
+        function UpdateSupplier() {
+            var cus = {
+                "Person": {
+                    "Id": $('#SupplierId').val(),
+                    "Name": {
+                        "First": $("#FName").val(),
+                        "Last": $("#LName").val()
+                    }
+                },
+                "Telephone": $("#Telephone").val(),
+            };
+            console.log(cus);
+
+            $.ajax({
+                url: "/api/Contact/Supplier",
+                type: "PUT",
+                contentType: "application/json;charset=utf-8",
+                data: JSON.stringify(cus),
+                success: function (response) {
+                    window.location.href = "new.html";
+                },
+                error: function (x, e) {
+                    alert('Failed');
+                    alert(x.responseText);
+                    alert(x.status);
+                }
+            });
+        }
+
+
+
+    </script>
+</head>
+
+<body>
+
+
+
+    <div id="stylized" class="myform">
+        <form id="form" action="#" name="form">
+            <h1>RESTFull Service Received for Suppliers and Suppliers</h1>
+            <p>This is a sample data.</p>
+
+            <div id="data" style="width:90%; margin:10px; padding:10px;">
+                <table border="1">
+                    <tr>
+                        <td>Supplier Id:<input type="text" id="SupplierId" readonly/></td>
+                        <td>First Name:<input type="text" id="FName" /></td>
+                        <td>Last Name:<input type="text" id="LName" /></td>
+                        <td>Telehpne:<input type="text" id="Telephone" /></td>
+                        <td><div><button id="btnEdit" type="button" onclick="UpdateSupplier();"> Submit </button></div></td>
+                    </tr>
+                </table>
+                </div>                
+                    
+                    
+                
+        </form>
+    </div>
+
+   
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>CRUD Application</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
+
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src="Scripts/apiscript.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div style="text-align:center">
+            <h2 class="jumbotron bg-secondary text-white">Contact Manager Web API</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-6"><center><B>*** CUSTOMER FORM ***</B></center>
+                <form class="cus-form" id="cus_form" onSubmit="return validatecForm();">
+                    <input type="hidden" name="customerId" id="customerId" value="x" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" name="cFirstName" id="cFirstName" placeholder="First Name" required=required />                            
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" name="cLastName" id="cLastName" placeholder="Last Name" required=required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input type="email" class="form-control" name="cEmail" id="cEmail"  placeholder="Email" required=required />
+                            <div class="validation-error">This Field is Required.</div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" name="cDob" id="cDob" placeholder="Date Of Birth" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <button type="button" id="cus_btn" onclick="validatecForm()" class="btn btn-lg btn-block btn-info">
+                                <i class="fa fa-floppy-o"></i>Submit
+                            </button>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="button" class="btn btn-lg btn-block btn-secondary" onclick="reset_Customer()">
+                                <i class="fa fa-repeat"></i> Reset
+                            </button>
+                        </div>
+                    </div> 
+                </form>
+            </div>
+            <div class="col-md-6"><center><B>*** SUPPLIER FORM ***</B></center>
+                <form class="sup-form" id="sup_form" onSubmit="validatesForm()">
+                    <input type="hidden" name="supplierId" id="supplierId" value="x" />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input class="form-control" name="sFirstName" id="sFirstName" placeholder="First Name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input class="form-control" name="sLastName" id="sLastName" placeholder="Last Name"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="sTelephone" id="sTelephone" placeholder="Supplier Phone Number" required=required />                
+                        <div class="validation-error">Must be valid Telephone #.</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <button type="button" onclick="validatesForm()" class="btn btn-lg btn-block btn-info">
+                                <i class="fa fa-floppy-o"></i>Submit
+                            </button>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="button" class="btn btn-lg btn-block btn-secondary" onclick="reset_Supplier()">
+                                <i class="fa fa-repeat"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" id="customers">
+                <br /><br /><center>Loading Feed!!</center>
+            </div>
+            <div class="col-md-6" id="suppliers">
+                <br /><br /><center>Loading Feed!!</center>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
